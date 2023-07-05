@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <math.h>
+
+// Функція для обчислення кількості точок перетину двох кола
+int countIntersectionPoints(int x1, int y1, int r1, int x2, int y2, int r2) {
+    double distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+
+    // Випадок, коли кола знаходяться одне в середині іншого
+    if (distance < abs(r1 - r2))
+        return 0;
+
+    // Випадок, коли кола не перетинаються
+    if (distance > r1 + r2)
+        return 0;
+
+    // Випадок, коли кола співпадають
+    if (distance == 0 && r1 == r2)
+        return -1;
+
+    // Випадок, коли кола мають одну точку перетину
+    if (distance == r1 + r2 || distance == abs(r1 - r2))
+        return 1;
+
+    // Випадок, коли кола мають дві точки перетину
+    return 2;
+}
+
+int main() {
+    int x1, y1, r1, x2, y2, r2;
+
+    // Зчитування координат центрів та радіусів кола
+    printf("Введіть координати центру першого кола (x1, y1): ");
+    scanf("%d %d", &x1, &y1);
+    printf("Введіть радіус першого кола (r1): ");
+    scanf("%d", &r1);
+    printf("Введіть координати центру другого кола (x2, y2): ");
+    scanf("%d %d", &x2, &y2);
+    printf("Введіть радіус другого кола (r2): ");
+    scanf("%d", &r2);
+
+    // Обчислення кількості точок перетину
+    int count = countIntersectionPoints(x1, y1, r1, x2, y2, r2);
+
+    // Виведення результату
+    printf("Кількість точок перетину: %d\n", count);
+
+    return 0;
+}
