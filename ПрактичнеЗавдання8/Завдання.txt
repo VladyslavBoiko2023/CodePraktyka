@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+// Функція для обчислення факторіала числа
+unsigned long long factorial(int n) {
+    unsigned long long result = 1;
+
+    for (int i = 1; i <= n; i++) {
+        result *= i;
+    }
+
+    return result;
+}
+
+// Функція для обчислення кількості анаграм
+unsigned long long countAnagrams(char word[]) {
+    int counts[26] = {0};
+
+    // Рахуємо кількість входжень кожної букви в слові
+    for (int i = 0; i < strlen(word); i++) {
+        char c = toupper(word[i]);
+        int index = c - 'A';
+        counts[index]++;
+    }
+
+    // Обчислюємо кількість анаграм за формулою: n! / (n1! * n2! * ... * nk!), де n - загальна кількість букв,
+    // n1, n2, ..., nk - кількість входжень кожної букви
+    unsigned long long result = factorial(strlen(word));
+    for (int i = 0; i < 26; i++) {
+        result /= factorial(counts[i]);
+    }
+
+    return result;
+}
+
+int main() {
+    char word[15];
+
+    // Зчитування слова
+    printf("Введіть слово: ");
+    scanf("%s", word);
+
+    // Обчислення кількості анаграм
+    unsigned long long count = countAnagrams(word);
+
+    // Виведення результату
+    printf("Кількість анаграм: %llu\n", count);
+
+    return 0;
+}
